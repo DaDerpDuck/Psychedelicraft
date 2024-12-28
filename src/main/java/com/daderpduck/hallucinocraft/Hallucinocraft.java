@@ -7,6 +7,7 @@ import com.daderpduck.hallucinocraft.client.rendering.shaders.post.PostShaders;
 import com.daderpduck.hallucinocraft.commands.SetDrugCommand;
 import com.daderpduck.hallucinocraft.drugs.Drug;
 import com.daderpduck.hallucinocraft.drugs.Drugs;
+import com.daderpduck.hallucinocraft.fluid.ModFluids;
 import com.daderpduck.hallucinocraft.items.*;
 import com.daderpduck.hallucinocraft.network.PacketHandler;
 import com.daderpduck.hallucinocraft.recipe.ModRecipes;
@@ -59,6 +60,7 @@ public class Hallucinocraft {
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModFluids.register(modEventBus);
         ModSounds.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModRecipes.register(modEventBus);
@@ -85,6 +87,7 @@ public class Hallucinocraft {
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         ModBlocks.initRenderTypes();
+        ModFluids.initRenderTypes();
 
         if (HallucinocraftConfig.CLIENT.useShaders.get()) {
             if (HallucinocraftConfig.CLIENT.useLevelShaders.get())
