@@ -1,9 +1,9 @@
 package com.daderpduck.hallucinocraft;
 
 import com.daderpduck.hallucinocraft.blocks.ModBlocks;
-import com.daderpduck.hallucinocraft.blocks.entities.ModBlockEntities;
 import com.daderpduck.hallucinocraft.client.rendering.shaders.LevelShaders;
 import com.daderpduck.hallucinocraft.client.rendering.shaders.post.PostShaders;
+import com.daderpduck.hallucinocraft.commands.ModCommandArgumentTypes;
 import com.daderpduck.hallucinocraft.commands.SetDrugCommand;
 import com.daderpduck.hallucinocraft.drugs.Drug;
 import com.daderpduck.hallucinocraft.drugs.Drugs;
@@ -11,8 +11,6 @@ import com.daderpduck.hallucinocraft.items.*;
 import com.daderpduck.hallucinocraft.network.PacketHandler;
 import com.daderpduck.hallucinocraft.recipe.ModRecipes;
 import com.daderpduck.hallucinocraft.sounds.ModSounds;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -29,7 +27,6 @@ import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.function.Supplier;
 
@@ -37,13 +34,6 @@ import java.util.function.Supplier;
 public class Hallucinocraft {
     public static final String MOD_ID = "hallucinocraft";
     public static final Logger LOGGER = LogManager.getLogger();
-    public static final CreativeModeTab TAB = new CreativeModeTab("creativetab") {
-        @Nonnull
-        @Override
-        public ItemStack makeIcon() {
-            return ModItems.RED_SHROOMS.get().getDefaultInstance();
-        }
-    };
 
     private static Supplier<IForgeRegistry<Drug>> drugSupplier;
 
@@ -55,13 +45,15 @@ public class Hallucinocraft {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, HallucinocraftConfig.clientSpec);
         modEventBus.register(HallucinocraftConfig.class);
 
-        drugSupplier = Drugs.DRUGS.makeRegistry(Drug.class, Drugs::getRegistryBuilder);
+        drugSupplier = Drugs.DRUGS.makeRegistry(Drugs::getRegistryBuilder);
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModSounds.register(modEventBus);
-        ModBlockEntities.register(modEventBus);
+//        ModBlockEntities.register(modEventBus);
+        ModCreativeModeTabs.register(modEventBus);
         ModRecipes.register(modEventBus);
+        ModCommandArgumentTypes.register(modEventBus);
         Drugs.register(modEventBus);
 
         PacketHandler.init();
@@ -80,7 +72,6 @@ public class Hallucinocraft {
         CauldronRegistry.register();
         BrewRegistry.register();
         BongRegistry.register();
-        SetDrugCommand.registerSerializer();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

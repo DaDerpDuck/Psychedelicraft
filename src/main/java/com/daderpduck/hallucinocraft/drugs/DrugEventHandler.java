@@ -7,6 +7,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -40,7 +41,7 @@ public class DrugEventHandler {
                 player.setAirSupply(player.getAirSupply() - (int) drugEffects.DROWN_RATE.getValue());
                 if (player.getAirSupply() <= -20) {
                     player.setAirSupply(0);
-                    player.hurt(DamageSource.DROWN, 2F);
+                    player.hurt(player.damageSources().drown(), 2F);
                 }
             }
             if (drugEffects.HUNGER_RATE.getValue() > 0) {
@@ -56,10 +57,10 @@ public class DrugEventHandler {
     }
 
     @SubscribeEvent
-    public static void worldTick(TickEvent.WorldTickEvent event) {
-        if (event.world.isClientSide) return;
+    public static void worldTick(TickEvent.LevelTickEvent event) {
+        if (event.level.isClientSide) return;
 
-        ServerLevel serverWorld = (ServerLevel) event.world;
+        ServerLevel serverWorld = (ServerLevel) event.level;
         for (ServerPlayer player : serverWorld.players()) {
             PlayerDrugs playerDrugs = PlayerDrugs.getPlayerDrugs(player);
             if (playerDrugs.getSmokeTicks() > 0) {

@@ -75,7 +75,7 @@ public class PostShaders {
 
         RenderSystem.disableBlend();
         RenderSystem.disableDepthTest();
-        RenderSystem.enableTexture();
+//        RenderSystem.enableTexture();
         RenderSystem.resetTextureMatrix();
 
         for (PostShader postShader : postShaders) {
@@ -87,7 +87,7 @@ public class PostShaders {
             }
         }
 
-        RenderSystem.enableTexture();
+//        RenderSystem.enableTexture();
 
         framebuffer.bindWrite(false);
     }

@@ -9,8 +9,8 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.commands.synchronization.ArgumentTypes;
-import net.minecraft.commands.synchronization.EmptyArgumentSerializer;
+import net.minecraft.commands.synchronization.ArgumentTypeInfos;
+import net.minecraft.commands.synchronization.SingletonArgumentInfo;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Collection;
@@ -33,10 +33,6 @@ public class SetDrugCommand {
                         .then(Commands.argument("players", EntityArgument.players())
                             .executes(context -> clearDrug(context.getSource(), EntityArgument.getPlayers(context, "players")))))
         );
-    }
-
-    public static void registerSerializer() {
-        ArgumentTypes.register("hallucinocraft:drug", DrugArgument.class, new EmptyArgumentSerializer<>(DrugArgument::drug));
     }
 
     private static int setDrugValue(CommandSourceStack source, Collection<ServerPlayer> players, Drug drug, float potency, int duration) {

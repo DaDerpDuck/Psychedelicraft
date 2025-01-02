@@ -11,7 +11,7 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Arrays;
@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class DrugArgument implements ArgumentType<Drug> {
     private static final Collection<String> EXAMPLES = Arrays.asList("hallucinocraft:brown_shrooms", "hallucinocraft:cannabis");
-    public static final DynamicCommandExceptionType ERROR_UNKNOWN_DRUG = new DynamicCommandExceptionType(arg -> new TranslatableComponent("hallucinocraft.drug.drugNotFound", arg));
+    public static final DynamicCommandExceptionType ERROR_UNKNOWN_DRUG = new DynamicCommandExceptionType(arg -> Component.translatable("hallucinocraft.drug.drugNotFound", arg));
 
     public static DrugArgument drug() {
         return new DrugArgument();

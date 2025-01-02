@@ -6,6 +6,7 @@ import com.daderpduck.hallucinocraft.HallucinocraftConfig;
 import com.daderpduck.hallucinocraft.drugs.Drug;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import org.lwjgl.openal.AL11;
 import org.lwjgl.openal.ALC10;
 import org.lwjgl.openal.EXTEfx;
@@ -18,7 +19,7 @@ import static org.lwjgl.openal.EXTEfx.*;
 public class SoundProcessor {
     private static boolean isSetup = false;
     private static int maxAuxSends;
-    private static final Random RANDOM = new Random();
+    private static final RandomSource RANDOM = RandomSource.create();
 
     private static int directFilter;
 
@@ -81,18 +82,18 @@ public class SoundProcessor {
         EXTEfx.alFilteri(sendFilter1, AL_FILTER_TYPE, AL_FILTER_LOWPASS);
         Hallucinocraft.LOGGER.debug("Filter {} created (send filter 1)", sendFilter1);
         ClientUtil.checkAlErrors("Creating send filter 1");
-        equalizerEffect1 = EXTEfx.alGenEffects();
-        EXTEfx.alEffecti(equalizerEffect1, AL_EFFECT_TYPE, AL_EFFECT_EQUALIZER);
-        Hallucinocraft.LOGGER.debug("Equalizer effect {} created", equalizerEffect1);
-        ClientUtil.checkAlErrors("Creating equalizer effect");
-        setEqualizerParameters(equalizerEffect1, auxFXSlot1, new EqualizerParams(
-                0.4F,
-                0.8F,
-                1F,
-                1F,
-                1F,
-                1.05F
-        ));
+//        equalizerEffect1 = EXTEfx.alGenEffects();
+//        EXTEfx.alEffecti(equalizerEffect1, AL_EFFECT_TYPE, AL_EFFECT_EQUALIZER);
+//        Hallucinocraft.LOGGER.debug("Equalizer effect {} created", equalizerEffect1);
+//        ClientUtil.checkAlErrors("Creating equalizer effect");
+//        setEqualizerParameters(equalizerEffect1, auxFXSlot1, new EqualizerParams(
+//                0.4F,
+//                0.8F,
+//                1F,
+//                1F,
+//                1F,
+//                1.05F
+//        ));
 
 
         auxFXSlot2 = EXTEfx.alGenAuxiliaryEffectSlots();
@@ -248,6 +249,7 @@ public class SoundProcessor {
         setEffectParam(effect, AL_ECHO_DAMPING, delay, "damping");
 
         EXTEfx.alAuxiliaryEffectSloti(auxFXSlot, AL_EFFECTSLOT_EFFECT, effect);
+        ClientUtil.checkAlErrors("Loading echo effect into slot");
     }
 
     private static void setReverbParameters(int effect, int auxFXSlot, ReverbParams params) {
@@ -268,18 +270,25 @@ public class SoundProcessor {
         setEffectParam(effect, AL_EAXREVERB_AIR_ABSORPTION_GAINHF, params.airAbsorptionGainHF(), "airAbsorptionGainHF");
 
         EXTEfx.alAuxiliaryEffectSloti(auxFXSlot, AL_EFFECTSLOT_EFFECT, effect);
+        ClientUtil.checkAlErrors("Loading reverb effect into slot");
     }
 
     private static void setEqualizerParameters(int effect, int auxFXSlot, EqualizerParams params) {
         effectName = "equalizer";
         setEffectParam(effect, AL_EQUALIZER_LOW_GAIN, params.lowGain(), "lowGain");
+        setEffectParam(effect, AL_EQUALIZER_LOW_CUTOFF, 200F, "lowCutoff");
         setEffectParam(effect, AL_EQUALIZER_MID1_GAIN, params.mid1Gain(), "mid1Gain");
+        setEffectParam(effect, AL_EQUALIZER_MID1_CENTER, 500F, "mid1Center");
         setEffectParam(effect, AL_EQUALIZER_MID1_WIDTH, params.mid1Width(), "mid1Width");
         setEffectParam(effect, AL_EQUALIZER_MID2_GAIN, params.mid2Gain(), "mid2Gain");
+        setEffectParam(effect, AL_EQUALIZER_MID2_CENTER, 3000F, "mid2Center");
         setEffectParam(effect, AL_EQUALIZER_MID2_WIDTH, params.mid2Width(), "mid2Width");
         setEffectParam(effect, AL_EQUALIZER_HIGH_GAIN, params.highGain(), "highGain");
+        setEffectParam(effect, AL_EQUALIZER_HIGH_CUTOFF, 6000F, "highCutoff");
 
-        EXTEfx.alAuxiliaryEffectSloti(auxFXSlot, AL_EFFECTSLOT_EFFECT, effect);
+        // FIXME: Causes a native crash
+        //EXTEfx.alAuxiliaryEffectSloti(auxFXSlot, AL_EFFECTSLOT_EFFECT, effect);
+        ClientUtil.checkAlErrors("Loading equalizer effect into slot");
     }
 
     private static void setDistortionParameters(int effect, int auxFXSlot, float edge) {
@@ -287,6 +296,7 @@ public class SoundProcessor {
         setEffectParam(effect, AL_DISTORTION_EDGE, edge, "edge");
 
         EXTEfx.alAuxiliaryEffectSloti(auxFXSlot, AL_EFFECTSLOT_EFFECT, effect);
+        ClientUtil.checkAlErrors("Loading distortion effect into slot");
     }
 
     private static void setFlangerParameters(int effect, int auxFXSlot, int waveform, float rate, float depth, float feedback, float delay) {
@@ -298,6 +308,7 @@ public class SoundProcessor {
         setEffectParam(effect, AL_FLANGER_DELAY, delay, "delay");
 
         EXTEfx.alAuxiliaryEffectSloti(auxFXSlot, AL_EFFECTSLOT_EFFECT, effect);
+        ClientUtil.checkAlErrors("Loading flanger effect into slot");
     }
 
     private static void setRingModulatorParameters(int effect, int auxFXSlot, float frequency, float highpassCutoff, int waveform) {
@@ -307,5 +318,6 @@ public class SoundProcessor {
         setEffectParam(effect, AL_RING_MODULATOR_WAVEFORM, waveform, "waveform");
 
         EXTEfx.alAuxiliaryEffectSloti(auxFXSlot, AL_EFFECTSLOT_EFFECT, effect);
+        ClientUtil.checkAlErrors("Loading ring modulator effect into slot");
     }
 }

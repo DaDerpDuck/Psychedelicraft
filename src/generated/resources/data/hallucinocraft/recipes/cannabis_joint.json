@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "#",
-    "@",
-    "#"
-  ],
+  "category": "misc",
   "key": {
     "#": {
       "item": "minecraft:paper"
@@ -13,7 +9,13 @@
       "item": "hallucinocraft:dried_cannabis_bud"
     }
   },
+  "pattern": [
+    "#",
+    "@",
+    "#"
+  ],
   "result": {
     "item": "hallucinocraft:cannabis_joint"
-  }
+  },
+  "show_notification": true
 }

@@ -1,9 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ABA",
-    "CCC"
-  ],
+  "category": "misc",
   "key": {
     "A": {
       "item": "minecraft:cocoa_beans"
@@ -15,7 +12,12 @@
       "item": "minecraft:wheat"
     }
   },
+  "pattern": [
+    "ABA",
+    "CCC"
+  ],
   "result": {
     "item": "hallucinocraft:hash_muffin"
-  }
+  },
+  "show_notification": true
 }

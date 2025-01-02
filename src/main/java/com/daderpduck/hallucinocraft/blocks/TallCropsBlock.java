@@ -4,6 +4,7 @@ import com.daderpduck.hallucinocraft.items.ModItems;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
@@ -20,7 +21,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Random;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -45,7 +45,7 @@ public class TallCropsBlock extends CropBlock {
     }
 
     @Override
-    public void randomTick(BlockState blockState, ServerLevel world, BlockPos blockPos, Random random) {
+    public void randomTick(BlockState blockState, ServerLevel world, BlockPos blockPos, RandomSource random) {
         if (!world.isAreaLoaded(blockPos, 1)) return;
         if (world.getRawBrightness(blockPos, 0) >= 9) {
             int age = getAge(blockState);
@@ -107,7 +107,7 @@ public class TallCropsBlock extends CropBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(BlockGetter blockReader, BlockPos blockPos, BlockState blockState, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader blockReader, BlockPos blockPos, BlockState blockState, boolean isClient) {
         return !isMaxAge(blockState) || (!isMaxHeight(blockState) && !blockReader.getBlockState(blockPos.above()).getBlock().equals(this));
     }
 

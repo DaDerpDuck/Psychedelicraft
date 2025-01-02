@@ -11,9 +11,9 @@ import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
-import net.minecraft.core.Registry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -21,6 +21,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -32,6 +33,7 @@ import java.util.function.Consumer;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class NbtShapedRecipeBuilder implements RecipeBuilder {
+    private final RecipeCategory category;
     private final Item result;
     private final int count;
     private final List<String> rows = Lists.newArrayList();
@@ -42,7 +44,8 @@ public class NbtShapedRecipeBuilder implements RecipeBuilder {
     @Nullable
     private String group;
 
-    public NbtShapedRecipeBuilder(ItemLike pResult, int pCount) {
+    public NbtShapedRecipeBuilder(RecipeCategory category, ItemLike pResult, int pCount) {
+        this.category = category;
         this.result = pResult.asItem();
         this.count = pCount;
     }
@@ -50,15 +53,15 @@ public class NbtShapedRecipeBuilder implements RecipeBuilder {
     /**
      * Creates a new builder for a shaped recipe.
      */
-    public static NbtShapedRecipeBuilder shaped(ItemLike pResult) {
-        return shaped(pResult, 1);
+    public static NbtShapedRecipeBuilder shaped(RecipeCategory category, ItemLike pResult) {
+        return shaped(category, pResult, 1);
     }
 
     /**
      * Creates a new builder for a shaped recipe.
      */
-    public static NbtShapedRecipeBuilder shaped(ItemLike pResult, int pCount) {
-        return new NbtShapedRecipeBuilder(pResult, pCount);
+    public static NbtShapedRecipeBuilder shaped(RecipeCategory category, ItemLike pResult, int pCount) {
+        return new NbtShapedRecipeBuilder(category, pResult, pCount);
     }
 
     public NbtShapedRecipeBuilder nbt(CompoundTag tag) {
@@ -123,7 +126,7 @@ public class NbtShapedRecipeBuilder implements RecipeBuilder {
     public void save(Consumer<FinishedRecipe> pFinishedRecipeConsumer, ResourceLocation pRecipeId) {
         this.ensureValid(pRecipeId);
         this.advancement.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId)).rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(RequirementsStrategy.OR);
-        pFinishedRecipeConsumer.accept(new NbtShapedRecipeBuilder.Result(pRecipeId, this.result, this.count, this.group == null ? "" : this.group, this.rows, this.key, this.advancement, new ResourceLocation(pRecipeId.getNamespace(), "recipes/" + this.result.getItemCategory().getRecipeFolderName() + "/" + pRecipeId.getPath()), nbt));
+        pFinishedRecipeConsumer.accept(new NbtShapedRecipeBuilder.Result(pRecipeId, this.result, this.count, this.group == null ? "" : this.group, this.rows, this.key, this.advancement, new ResourceLocation(pRecipeId.getNamespace(), "recipes/" + this.category.getFolderName() + "/" + pRecipeId.getPath()), nbt));
     }
 
     /**
@@ -201,7 +204,7 @@ public class NbtShapedRecipeBuilder implements RecipeBuilder {
 
             pJson.add("key", jsonobject);
             JsonObject jsonobject1 = new JsonObject();
-            jsonobject1.addProperty("item", Registry.ITEM.getKey(this.result).toString());
+            jsonobject1.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result).toString());
             if (this.count > 1) {
                 jsonobject1.addProperty("count", this.count);
             }

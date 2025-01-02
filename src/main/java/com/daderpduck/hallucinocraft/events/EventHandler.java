@@ -22,9 +22,9 @@ import net.minecraftforge.fml.common.Mod;
 public class EventHandler {
     @SubscribeEvent
     public static void cutPoppy(PlayerInteractEvent.RightClickBlock event) {
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         InteractionHand hand = event.getHand();
-        Level world = player.level;
+        Level world = player.level();
         if (world.isClientSide) return;
         ItemStack itemStack = player.getItemInHand(hand);
         BlockPos blockPos = event.getHitVec().getBlockPos();

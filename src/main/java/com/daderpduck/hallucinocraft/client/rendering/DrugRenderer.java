@@ -11,7 +11,7 @@ import com.daderpduck.hallucinocraft.mixin.client.InvokerConfigOF;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -81,7 +81,7 @@ public class DrugRenderer {
     }
 
     @SubscribeEvent
-    public static void fogDensity(EntityViewRenderEvent.RenderFogEvent event) {
+    public static void fogDensity(ViewportEvent.RenderFog event) {
         float fogDensity = Drug.getDrugEffects().FOG_DENSITY.getClamped();
         if (fogDensity > 0) {
             if (event.getNearPlaneDistance() > 0)
@@ -92,7 +92,7 @@ public class DrugRenderer {
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void fogColor(EntityViewRenderEvent.FogColors event) {
+    public static void fogColor(ViewportEvent.ComputeFogColor event) {
         float fogDarken = Drug.getDrugEffects().FOG_DARKEN.getClamped();
         if (fogDarken > 0) {
             event.setRed(Mth.lerp(fogDarken, event.getRed(), 0));

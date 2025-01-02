@@ -11,6 +11,6 @@ import net.minecraftforge.fml.common.Mod;
 public class ModBlockEntityRenderers {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(ModBlockEntityTypes.FERMENTING_BOTTLE, FermentingBottleRenderer::new);
+//        event.registerBlockEntityRenderer(ModBlockEntityTypes.FERMENTING_BOTTLE, FermentingBottleRenderer::new);
     }
 }

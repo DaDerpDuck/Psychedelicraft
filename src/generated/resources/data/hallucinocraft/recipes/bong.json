@@ -1,9 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "A",
-    "B"
-  ],
   "key": {
     "A": {
       "item": "minecraft:glass"
@@ -12,6 +8,10 @@
       "item": "minecraft:glass_bottle"
     }
   },
+  "pattern": [
+    "A",
+    "B"
+  ],
   "result": {
     "item": "hallucinocraft:bong",
     "nbt": {

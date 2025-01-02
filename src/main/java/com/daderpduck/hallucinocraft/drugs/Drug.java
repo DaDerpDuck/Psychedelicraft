@@ -7,7 +7,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class Drug extends ForgeRegistryEntry<Drug> {
+public class Drug {
     private final Envelope envelope;
     private final int abuseAdder;
 
@@ -107,7 +106,7 @@ public class Drug extends ForgeRegistryEntry<Drug> {
             if (drug.getAbuseAdder() > 0) addAbuse(player, drug, drug.getAbuseAdder());
         }
 
-        if (!player.level.isClientSide) // abuse map isn't synced, so to fix spasms, this is here
+        if (!player.level().isClientSide) // abuse map isn't synced, so to fix spasms, this is here
             playerDrugs.getDrugAbuseMap().forEach((drug, abuse) -> drug.abuseTick(player, getDrugEffects(player), abuse));
     }
 

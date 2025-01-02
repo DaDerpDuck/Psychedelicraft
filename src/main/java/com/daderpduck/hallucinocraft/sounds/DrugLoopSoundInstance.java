@@ -1,13 +1,14 @@
 package com.daderpduck.hallucinocraft.sounds;
 
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 
 public class DrugLoopSoundInstance extends AbstractTickableSoundInstance {
     public DrugLoopSoundInstance(SoundEvent soundEvent) {
-        super(soundEvent, SoundSource.AMBIENT);
+        super(soundEvent, SoundSource.AMBIENT, SoundInstance.createUnseededRandom());
         this.looping = true;
         this.delay = 0;
         this.volume = 1.0F;

@@ -4,7 +4,7 @@ import com.daderpduck.hallucinocraft.client.rendering.shaders.post.PostShaders;
 import com.daderpduck.hallucinocraft.events.hooks.RenderEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
-import net.minecraftforge.client.event.RenderLevelLastEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -17,8 +17,9 @@ public class ShaderEventHandler {
             isRenderingLevel = true;
         }
         @SubscribeEvent
-        public static void onRenderLast(RenderLevelLastEvent event) {
-            isRenderingLevel = false;
+        public static void onRenderLast(RenderLevelStageEvent event) {
+            if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_LEVEL)
+                isRenderingLevel = false;
         }
 
         @SubscribeEvent
@@ -34,8 +35,9 @@ public class ShaderEventHandler {
 
     public static class Post {
         @SubscribeEvent
-        public static void renderPostWorld(RenderLevelLastEvent event) {
-            PostShaders.processPostShaders(event.getPartialTick());
+        public static void renderPostWorld(RenderLevelStageEvent event) {
+            if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_LEVEL)
+                PostShaders.processPostShaders(event.getPartialTick());
         }
 
         @SubscribeEvent

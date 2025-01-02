@@ -1,20 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "igI"
-  ],
+  "category": "misc",
   "key": {
-    "i": {
-      "item": "minecraft:iron_nugget"
+    "I": {
+      "item": "minecraft:iron_ingot"
     },
     "g": {
       "item": "minecraft:glass"
     },
-    "I": {
-      "item": "minecraft:iron_ingot"
+    "i": {
+      "item": "minecraft:iron_nugget"
     }
   },
+  "pattern": [
+    "igI"
+  ],
   "result": {
     "item": "hallucinocraft:syringe"
-  }
+  },
+  "show_notification": true
 }

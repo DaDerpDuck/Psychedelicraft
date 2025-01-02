@@ -32,7 +32,7 @@ public class PlayerCapEvents {
     public static void onPlayerCloned(PlayerEvent.Clone event) {
         if (!event.isWasDeath()) {
             event.getOriginal().getCapability(PlayerDrugsProvider.PLAYER_DRUGS).ifPresent(oldStore ->
-                    event.getPlayer().getCapability(PlayerDrugsProvider.PLAYER_DRUGS).ifPresent(newStore ->
+                    event.getOriginal().getCapability(PlayerDrugsProvider.PLAYER_DRUGS).ifPresent(newStore ->
                             newStore.copyFrom(oldStore)));
         }
     }
@@ -44,14 +44,14 @@ public class PlayerCapEvents {
 
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
-        sync((ServerPlayer) event.getPlayer());
-        syncActives((ServerPlayer) event.getPlayer());
+        sync((ServerPlayer) event.getEntity());
+        syncActives((ServerPlayer) event.getEntity());
     }
 
     @SubscribeEvent
     public static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        sync((ServerPlayer) event.getPlayer());
-        syncActives((ServerPlayer) event.getPlayer());
+        sync((ServerPlayer) event.getEntity());
+        syncActives((ServerPlayer) event.getEntity());
     }
 
     private static int totalTicks = 1;

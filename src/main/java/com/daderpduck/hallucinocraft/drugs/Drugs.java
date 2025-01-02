@@ -27,9 +27,7 @@ public class Drugs {
     }
 
     public static RegistryBuilder<Drug> getRegistryBuilder() {
-        return new RegistryBuilder<Drug>()
-                .setName(new ResourceLocation(Hallucinocraft.MOD_ID, "drug"))
-                .setType(Drug.class);
+        return new RegistryBuilder<>();
     }
 
     public static void register(IEventBus modBus) {

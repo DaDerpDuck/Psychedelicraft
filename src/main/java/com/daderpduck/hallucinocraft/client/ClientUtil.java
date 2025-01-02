@@ -3,8 +3,7 @@ package com.daderpduck.hallucinocraft.client;
 import com.daderpduck.hallucinocraft.Hallucinocraft;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.language.I18n;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import org.lwjgl.openal.AL11;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
@@ -32,8 +31,7 @@ public class ClientUtil {
                 lastGlErrorTime = System.nanoTime();
                 Hallucinocraft.LOGGER.error("OpenGL error: {} ({}) at: {}", e, i, location);
 
-                String chatMessage = I18n.get("hallucinocraft.message.glError", e, i, location);
-                Minecraft.getInstance().gui.getChat().addMessage(new TextComponent(chatMessage));
+                Minecraft.getInstance().gui.getChat().addMessage(Component.translatable("hallucinocraft.message.glError", e, i, location));
             }
         }
     }
@@ -61,8 +59,7 @@ public class ClientUtil {
                 lastAlErrorTime = System.nanoTime();
                 Hallucinocraft.LOGGER.error("OpenAL error: {} ({}) at: {}", e, i, location);
 
-                String chatMessage = I18n.get("hallucinocraft.message.alError", e, i, location);
-                Minecraft.getInstance().gui.getChat().addMessage(new TextComponent(chatMessage));
+                Minecraft.getInstance().gui.getChat().addMessage(Component.translatable("hallucinocraft.message.alError", e, i, location));
             }
         }
     }

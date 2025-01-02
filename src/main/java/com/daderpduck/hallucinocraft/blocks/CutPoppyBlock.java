@@ -2,10 +2,12 @@ package com.daderpduck.hallucinocraft.blocks;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
@@ -57,12 +59,12 @@ public class CutPoppyBlock extends CropBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(BlockGetter p_176473_1_, BlockPos p_176473_2_, BlockState p_176473_3_, boolean p_176473_4_) {
+    public boolean isValidBonemealTarget(LevelReader p_176473_1_, BlockPos p_176473_2_, BlockState p_176473_3_, boolean p_176473_4_) {
         return false;
     }
 
     @Override
-    public boolean isBonemealSuccess(Level p_180670_1_, Random p_180670_2_, BlockPos p_180670_3_, BlockState p_180670_4_) {
+    public boolean isBonemealSuccess(Level p_180670_1_, RandomSource p_180670_2_, BlockPos p_180670_3_, BlockState p_180670_4_) {
         return false;
     }
 
@@ -76,9 +78,9 @@ public class CutPoppyBlock extends CropBlock {
         Vec3 vector3d = blockState.getOffset(blockReader, blockPos);
         return SHAPE.move(vector3d.x, vector3d.y, vector3d.z);
     }
-
-    @Override
-    public OffsetType getOffsetType() {
-        return BlockBehaviour.OffsetType.XZ;
-    }
+//
+//    @Override
+//    public OffsetType getOffsetType() {
+//        return BlockBehaviour.OffsetType.XZ;
+//    }
 }

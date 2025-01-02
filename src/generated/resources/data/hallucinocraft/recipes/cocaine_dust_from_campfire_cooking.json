@@ -1,9 +1,10 @@
 {
   "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 600,
+  "experience": 0.35,
   "ingredient": {
     "item": "hallucinocraft:coca_mulch"
   },
-  "result": "hallucinocraft:cocaine_dust",
-  "experience": 0.35,
-  "cookingtime": 600
+  "result": "hallucinocraft:cocaine_dust"
 }

@@ -4,22 +4,22 @@ import com.daderpduck.hallucinocraft.Hallucinocraft;
 import com.daderpduck.hallucinocraft.blocks.ModBlocks;
 import com.daderpduck.hallucinocraft.items.ModItems;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Objects;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class ModItemModelProvider extends ItemModelProvider {
-    public ModItemModelProvider(DataGenerator generator, String modid, ExistingFileHelper existingFileHelper) {
-        super(generator, modid, existingFileHelper);
+    public ModItemModelProvider(PackOutput packOutput, ExistingFileHelper existingFileHelper) {
+        super(packOutput, Hallucinocraft.MOD_ID, existingFileHelper);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         syringe(ModItems.SOUL_WRENCHER_SYRINGE.get());
         simpleItem(ModItems.CIGARETTE.get());
         simpleItem(ModItems.AIRLOCK.get());
-        simpleBlock(ModItems.FERMENTING_BOTTLE.get(), ModBlocks.FERMENTING_BOTTLE_BLOCK.get());
+//        simpleBlock(ModItems.FERMENTING_BOTTLE.get(), ModBlocks.FERMENTING_BOTTLE_BLOCK.get());
     }
 
     protected void simpleItem(Item item) {
@@ -85,7 +85,8 @@ public class ModItemModelProvider extends ItemModelProvider {
     }
 
     protected void simpleBlock(Item item, Block block) {
-        withExistingParent(getItemName(item), new ResourceLocation(Objects.requireNonNull(block.getRegistryName()).getNamespace(), "block/" + Objects.requireNonNull(block.getRegistryName()).getPath()));
+        ResourceLocation resourceLocation = ForgeRegistries.BLOCKS.getKey(block);
+        withExistingParent(getItemName(item), new ResourceLocation(resourceLocation.getNamespace(), "block/" + resourceLocation.getPath()));
     }
 
     protected void syringe(Item item) {
@@ -95,6 +96,6 @@ public class ModItemModelProvider extends ItemModelProvider {
     }
 
     protected static String getItemName(Item item) {
-        return Objects.requireNonNull(item.getRegistryName()).getPath();
+        return ForgeRegistries.ITEMS.getKey(item).getPath();
     }
 }

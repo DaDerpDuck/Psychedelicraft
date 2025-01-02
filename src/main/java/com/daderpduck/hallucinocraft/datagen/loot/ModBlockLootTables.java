@@ -4,7 +4,8 @@ import com.daderpduck.hallucinocraft.blocks.ModBlocks;
 import com.daderpduck.hallucinocraft.items.ModItems;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
-import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -15,12 +16,17 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePrope
 import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Collections;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class ModBlockLootTables extends BlockLoot {
+public class ModBlockLootTables extends BlockLootSubProvider {
+    public ModBlockLootTables() {
+        super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags());
+    }
+
     @Override
-    protected void addTables() {
+    protected void generate() {
         LootItemBlockStatePropertyCondition.Builder cocaGrownCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.COCA_BLOCK.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(ModBlocks.COCA_BLOCK.get().getAgeProperty(), 3));
         add(ModBlocks.COCA_BLOCK.get(), applyExplosionDecay(ModBlocks.COCA_BLOCK.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
@@ -49,7 +55,7 @@ public class ModBlockLootTables extends BlockLoot {
                                 .apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5714286F, 3))))));
         add(ModBlocks.COKE_CAKE_BLOCK.get(), noDrop());
         add(ModBlocks.CUT_POPPY_BLOCK.get(), noDrop());
-        dropSelf(ModBlocks.FERMENTING_BOTTLE_BLOCK.get());
+//        dropSelf(ModBlocks.FERMENTING_BOTTLE_BLOCK.get());
     }
 
     @Override

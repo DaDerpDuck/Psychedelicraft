@@ -1,9 +1,10 @@
 {
   "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 600,
+  "experience": 0.35,
   "ingredient": {
     "item": "hallucinocraft:opium_bottle_3"
   },
-  "result": "hallucinocraft:morphine_bottle",
-  "experience": 0.35,
-  "cookingtime": 600
+  "result": "hallucinocraft:morphine_bottle"
 }

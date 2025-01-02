@@ -98,13 +98,13 @@ public class BongItem extends Item {
         return 32;
     }
 
-    @Override
-    public void fillItemCategory(CreativeModeTab itemGroup, NonNullList<ItemStack> itemStacks) {
-        super.fillItemCategory(itemGroup, itemStacks);
-        if (allowdedIn(itemGroup)) {
-            ItemStack emptyBong = new ItemStack(this);
-            emptyBong.setDamageValue(getMaxDamage(emptyBong));
-            itemStacks.add(emptyBong);
-        }
-    }
+//    @Override
+//    public void fillItemCategory(CreativeModeTab itemGroup, NonNullList<ItemStack> itemStacks) {
+//        super.fillItemCategory(itemGroup, itemStacks);
+//        if (allowdedIn(itemGroup)) {
+//            ItemStack emptyBong = new ItemStack(this);
+//            emptyBong.setDamageValue(getMaxDamage(emptyBong));
+//            itemStacks.add(emptyBong);
+//        }
+//    }
 }

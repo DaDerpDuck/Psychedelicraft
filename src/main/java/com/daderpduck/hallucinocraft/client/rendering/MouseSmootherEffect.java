@@ -31,7 +31,7 @@ public class MouseSmootherEffect {
         lastMouseEventTime = time;
 
         if (minecraft.mouseHandler.isMouseGrabbed() && minecraft.isWindowActive()) {
-            double d0 = minecraft.options.sensitivity * 0.6D + 0.2D;
+            double d0 = minecraft.options.sensitivity().get() * 0.6D + 0.2D;
             double d1 = d0 * d0 * d0 * 8.0D;
 
             double amplifier = getAmplifier();

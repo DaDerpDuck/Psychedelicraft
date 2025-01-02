@@ -1,26 +1,27 @@
 modLoader="javafml"
 loaderVersion="${loader_range}"
-license="MIT"
+license="${mod_license}"
 
 [[mods]]
-modId = "hallucinocraft"
-version = "${file.jarVersion}"
-displayName = "Hallucinocraft"
-authors = "DaDerpDuck"
-description = '''
-Adds drugs into Minecraft.
-'''
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+authors="${mod_authors}"
+description='''${mod_description}'''
 
-[[dependencies.hallucinocraft]]
+[[dependencies.${mod_id}]]
     modId = "forge"
     mandatory = true
     versionRange = "${forge_range}"
     ordering = "NONE"
     side = "BOTH"
 
-[[dependencies.hallucinocraft]]
+[[dependencies.${mod_id}]]
     modId = "minecraft"
     mandatory = true
     versionRange = "${mc_range}"
     ordering = "NONE"
     side = "BOTH"
+
+[features.${mod_id}]
+    openGLVersion="[3.2,)"

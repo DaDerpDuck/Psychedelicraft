@@ -18,7 +18,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> AMBIENT_SOUL_WRENCHER_ADDITIONS = register("ambience.soul_wrencher.additions");
 
     private static RegistryObject<SoundEvent> register(String key) {
-        return register(key, () -> new SoundEvent(new ResourceLocation(Hallucinocraft.MOD_ID, key)));
+        return register(key, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Hallucinocraft.MOD_ID, key)));
     }
 
     private static RegistryObject<SoundEvent> register(String name, Supplier<SoundEvent> supplier) {
